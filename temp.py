@@ -52,7 +52,8 @@ class Scraper:
         None.
 
         '''
-        header ={'User-Agent':"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
+        # Supply your own header
+        header ={'User-Agent':""}
         try:    
             page = requests.get(self.url, headers = header)  
             print(page)
@@ -65,18 +66,11 @@ class Scraper:
         except:
             pass
             
-    def rss_crawler(self,link):
-        news = feedparser.parse(link)
-        df_news_feed=json_normalize(news.entries)
-        links = list(df_news_feed.link)
-        for link in links:
-            self.writer(link)
-
     def writer(self, link):
         global sum
         print
         sum+=1
-        with open('Republic_TV/DATA'+str(sum),'at') as f:
+        with open('NEWS/ARTICLE_'+str(sum),'at') as f:
             print(link)
             
             data = self.extractor(link)
